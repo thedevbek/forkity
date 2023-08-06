@@ -20,12 +20,19 @@ class RecipeView extends View {
     })
   }
 
+  addHandlerAddBookmark(handler) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--bookmark');
+      if (!btn) return;
+      handler();
+    });
+    }
+
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
-        <img src="${this._data.image}" alt="${
-      this._data.title
-    }" class="recipe__img" />
+        <img src="${this._data.image}" alt="${this._data.title
+      }" class="recipe__img" />
         <h1 class="recipe__title">
             <span>"${this._data.title}"</span>
         </h1>
@@ -36,18 +43,16 @@ class RecipeView extends View {
             <svg class="recipe__info-icon">
             <use href="${icons}#icon-clock"></use>
             </svg>
-            <span class="recipe__info-data recipe__info-data--minutes">${
-              this._data.cookingTime
-            }</span>
+            <span class="recipe__info-data recipe__info-data--minutes">${this._data.cookingTime
+      }</span>
             <span class="recipe__info-text">minutes</span>
         </div>
         <div class="recipe__info">
             <svg class="recipe__info-icon">
             <use href="${icons}#icon-users"></use>
             </svg>
-            <span class="recipe__info-data recipe__info-data--people">${
-              this._data.servings
-            }</span>
+            <span class="recipe__info-data recipe__info-data--people">${this._data.servings
+      }</span>
             <span class="recipe__info-text">servings</span>
 
             <div class="recipe__info-buttons">
@@ -64,15 +69,19 @@ class RecipeView extends View {
             </div>
         </div>
 
-        <div class="recipe__user-generated">
-          
+        <div class="recipe__user-generated ${this._data.key ? '' : 'hidden'}">
+          <svg>
+            <use href="${icons}#icon-user"></use>
+          </svg>
         </div>
-        <button class="btn--round">
-            <svg class="">
-            <use href="${icons}#icon-bookmark-fill"></use>
-            </svg>
+        <button class="btn--round btn--bookmark">
+          <svg class="">
+            <use href="${icons}#icon-bookmark${
+      this._data.bookmarked ? '-fill' : ''
+    }"></use>
+          </svg>
         </button>
-        </div>
+      </div>
 
         <div class="recipe__ingredients">
         <h2 class="heading--2">Recipe ingredients</h2>
