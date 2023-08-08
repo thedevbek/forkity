@@ -11,6 +11,12 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 
+/**
+ * The `controlRecipes` function is responsible for controlling the flow of actions when a recipe is
+ * selected, including updating the results view, bookmarks view, loading the recipe, and rendering the
+ * recipe.
+ * @returns If there is no `id`, the function will return nothing (`undefined`).
+ */
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
@@ -35,6 +41,11 @@ const controlRecipes = async function () {
   }
 };
 
+/**
+ * The function `controlSearchResults` is responsible for handling the search functionality, including
+ * loading search results, rendering them, and rendering pagination buttons.
+ * @returns If the query is empty, nothing is returned. Otherwise, the search results page is rendered.
+ */
 const controlSearchResults = async function () {
   try {
     resultsView.renderSpinner();
@@ -56,6 +67,13 @@ const controlSearchResults = async function () {
   }
 };
 
+/**
+ * The controlPagination function renders new search results and pagination buttons based on the
+ * specified page number.
+ * @param goToPage - The `goToPage` parameter is the page number that the user wants to navigate to in
+ * the pagination. It is used to retrieve the search results for that specific page and render them on
+ * the page.
+ */
 const controlPagination = function (goToPage) {
   // 1) Render NEW results
   resultsView.render(model.getSearchResultsPage(goToPage));
@@ -64,6 +82,11 @@ const controlPagination = function (goToPage) {
   paginationView.render(model.state.search);
 };
 
+/**
+ * The controlServings function updates the recipe servings in the state and then updates the recipe
+ * view.
+ * @param newServings - The new number of servings for the recipe.
+ */
 const controlServings = function (newServings) {
   // Update the recipe servings (in state)
   model.updateServings(newServings);
@@ -72,6 +95,10 @@ const controlServings = function (newServings) {
   recipeView.update(model.state.recipe);
 };
 
+/**
+ * The controlAddBookmark function adds or removes a bookmark for a recipe, updates the recipe view,
+ * and renders the bookmarks.
+ */
 const controlAddBookmark = function () {
   // 1) Add/remove bookmark
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
@@ -84,10 +111,21 @@ const controlAddBookmark = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+/**
+ * The controlBookmarks function renders the bookmarks in the model state.
+ */
 const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+/**
+ * The `controlAddRecipe` function handles the process of adding a new recipe, including uploading the
+ * recipe data, rendering the recipe view, displaying success messages, updating the URL, and closing
+ * the form window.
+ * @param newRecipe - The `newRecipe` parameter is an object that represents the new recipe data that
+ * will be added. It contains properties such as the recipe title, ingredients, cooking time, servings,
+ * and instructions.
+ */
 const controlAddRecipe = async function (newRecipe) {
   try {
     // Show loading spinner
@@ -120,6 +158,10 @@ const controlAddRecipe = async function (newRecipe) {
   }
 };
 
+/**
+ * The `init` function initializes the application by adding event handlers to various views and
+ * calling their respective control functions.
+ */
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);

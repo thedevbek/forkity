@@ -4,15 +4,32 @@ import View from './View.js';
 import icons from 'url:../../img/icons.svg'; // Parcel 2
 import { Fraction } from 'fractional';
 
+/* The RecipeView class is responsible for rendering the recipe details on the user interface and
+handling user interactions such as updating servings and adding bookmarks. */
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = 'We could not find that recipe. Please try another one!';
   _message = '';
 
+ /**
+  * The function adds an event listener to the window for the 'hashchange' and 'load' events, and calls
+  * the provided handler function when either of these events occur.
+  * @param handler - The `handler` parameter is a function that will be called whenever the
+  * `hashchange` or `load` events are triggered.
+  */
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
   }
 
+ /**
+  * The function adds an event listener to the parent element that listens for clicks on buttons with
+  * the class 'btn--update-servings', and when clicked, it calls the provided handler function with the
+  * value of the 'updateTo' data attribute of the clicked button.
+  * @param handler - The `handler` parameter is a function that will be called when the event is
+  * triggered. It takes one argument, which is the number of servings to update to.
+  * @returns There is no explicit return statement in the code snippet provided. Therefore, the
+  * function does not return anything.
+  */
   addHandlerUpdateServings(handler) {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--update-servings');
@@ -22,6 +39,13 @@ class RecipeView extends View {
     });
   }
 
+ /**
+  * The addHandlerAddBookmark function adds a click event listener to the parent element and calls the
+  * provided handler function when a button with the class 'btn--bookmark' is clicked.
+  * @param handler - The `handler` parameter is a function that will be executed when the click event
+  * is triggered on the parent element.
+  * @returns Nothing is being returned in this code snippet.
+  */
   addHandlerAddBookmark(handler) {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--bookmark');
@@ -30,6 +54,11 @@ class RecipeView extends View {
     });
   }
 
+  /**
+   * The `_generateMarkup()` function returns a string of HTML markup that represents a recipe,
+   * including the recipe image, title, cooking time, servings, ingredients, and directions.
+   * @returns a string of HTML markup.
+   */
   _generateMarkup() {
     return `
       <figure class="recipe__fig">
@@ -121,6 +150,8 @@ class RecipeView extends View {
     `;
   }
 
+ /* The `_generateMarkupIngredient(ing)` function is a helper function within the `RecipeView` class.
+ It takes an `ing` parameter, which represents an ingredient object. */
   _generateMarkupIngredient(ing) {
     return `
     <li class="recipe__ingredient">

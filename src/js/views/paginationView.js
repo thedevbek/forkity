@@ -1,9 +1,19 @@
 import View from "./View.js";
 import icons from '../../img/icons.svg';
 
+/* The PaginationView class is a JavaScript class that generates the markup for a pagination component
+and handles click events on the pagination buttons. */
 class PaginationView extends View {
     _parentElement = document.querySelector('.pagination');
 
+  /**
+   * The addHandlerClick function adds a click event listener to the parent element and calls the
+   * provided handler function with the data-goto value of the clicked button.
+   * @param handler - The `handler` parameter is a function that will be called when the click event is
+   * triggered. It takes one argument, `gotToPage`, which represents the page number that the user
+   * wants to navigate to.
+   * @returns Nothing is being returned in this code snippet.
+   */
     addHandlerClick(handler) {
         this._parentElement.addEventListener('click', function (e) {
             const btn = e.target.closest('.btn--inline')
@@ -14,6 +24,9 @@ class PaginationView extends View {
         })
     }
 
+  /* The `_generateMarkup()` function is a private method of the `PaginationView` class. It is
+  responsible for generating the HTML markup for the pagination component based on the current page
+  and the number of pages. */
     _generateMarkup() {
         const curPage = this._data.page;
         // page 1, and other pages

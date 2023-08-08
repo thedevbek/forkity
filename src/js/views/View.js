@@ -1,9 +1,12 @@
 import icons from '../../img/icons.svg';
+
+/* The View class is responsible for rendering data to the DOM and handling error and message displays. */
 export default class View {
     _data;
 
   /** 
-   * Render the received object to the DOM
+   * ! Jonas Wrote
+   * Render the received object to the DOM 
    * @param {Object | Object[]} data The data to be rendered (e.g. recipe) 
    * @param {boolean} [render = true] If false, create markup string instead of rendering to the DOM
    * @returns {undefined | string} A markup string is returned if render=false
@@ -11,6 +14,7 @@ export default class View {
    * @author Bek Johansson
    * @todo Finish implementation
    */
+  
   render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
@@ -25,6 +29,12 @@ export default class View {
   }
 
   // updates changed TEXT
+ /**
+  * The `update` function updates the DOM elements based on the new data provided, by comparing and
+  * updating text content and attributes of the elements.
+  * @param data - The `data` parameter is the new data that will be used to update the markup. It is an
+  * object that contains the updated values for the elements in the markup.
+  */
   update(data) {
     this._data = data;
     const newMarkup = this._generateMarkup();
@@ -52,10 +62,17 @@ export default class View {
     });  
   }
 
+   /**
+    * The _clear() function clears the inner HTML content of the parent element.
+    */
     _clear() {
     this._parentElement.innerHTML = '';
   }
 
+ /**
+  * The `renderSpinner` function inserts a spinner element into the parent element to indicate that a
+  * process is loading.
+  */
   renderSpinner() {
     const markup = `
     <div class="spinner">
@@ -68,6 +85,13 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /**
+   * The `renderError` function renders an error message with an icon and a given error message.
+   * @param [message] - The `message` parameter is a string that represents the error message to be
+   * displayed. It is an optional parameter with a default value of `this._errorMessage`, which is a
+   * property of the current object. If no `message` argument is provided when calling the
+   * `renderError` method, the default
+   */
   renderError(message = this._errorMessage) {
     const markup = `
         <div class="error">
@@ -83,6 +107,12 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+/**
+ * The `renderMessage` function generates HTML markup for displaying a message with a smiley icon and
+ * inserts it into the parent element.
+ * @param [message] - The `message` parameter is a string that represents the content of the message to
+ * be rendered.
+ */
 renderMessage(message = this._message) {
     const markup = `
         <div class="message">
