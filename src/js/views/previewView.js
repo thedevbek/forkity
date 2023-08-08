@@ -1,14 +1,13 @@
-
-import View from "./View.js";
-import icons from '../../img/icons.svg';
+import View from './View.js';
+import icons from 'url:../../img/icons.svg'; // Parcel 2
 
 class PreviewView extends View {
   _parentElement = '';
-  
+
   _generateMarkup() {
     const id = window.location.hash.slice(1);
 
-  return `
+    return `
       <li class="preview">
         <a class="preview__link ${
           this._data.id === id ? 'preview__link--active' : ''
@@ -34,6 +33,3 @@ class PreviewView extends View {
 }
 
 export default new PreviewView();
-
-
-
